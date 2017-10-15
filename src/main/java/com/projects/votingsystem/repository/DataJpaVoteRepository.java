@@ -14,9 +14,11 @@ import java.util.List;
 public interface DataJpaVoteRepository extends JpaRepository<Vote, Integer> {
 
     @Query("SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.dateTime")
-    public List<Vote> getAllByUser(@Param("userId") int userId);
+    List<Vote> getAllByUser(@Param("userId") int userId);
 
-    public List<Vote> getAllByDateTime(LocalDateTime dateTime);
+    @Query("SELECT v from Vote v WHERE v.dateTime BETWEEN :startDateTime AND :endDateTime")
+    List<Vote> getAllByDateTime(@Param("startDateTime") LocalDateTime startDateTime,
+                                @Param("endDateTime") LocalDateTime endDateTime);
 
     @Override
     Vote save(Vote item);

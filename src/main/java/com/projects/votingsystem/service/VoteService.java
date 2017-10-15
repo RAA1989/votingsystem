@@ -3,7 +3,7 @@ package com.projects.votingsystem.service;
 
 import com.projects.votingsystem.model.Vote;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface VoteService {
@@ -12,7 +12,7 @@ public interface VoteService {
 
     Vote getLast(int userId);
 
-    List<Vote> getAlByDateTime(LocalDateTime dateTime);
+    List<Vote> getAllByDate(LocalDate date);
 
-    Vote save(Vote vote);
+    Vote save(Vote vote, int userId, int restaurantId);
 }

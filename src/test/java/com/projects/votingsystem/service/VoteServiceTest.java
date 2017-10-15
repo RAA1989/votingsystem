@@ -1,13 +1,18 @@
 package com.projects.votingsystem.service;
 
 
+import com.projects.votingsystem.model.Vote;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.projects.votingsystem.VoteTestData.VOTE1;
-import static com.projects.votingsystem.VoteTestData.VOTE1_ID;
+import java.io.BufferedReader;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.projects.votingsystem.VoteTestData.*;
 
 public class VoteServiceTest extends AbstractServiceTest {
 
@@ -15,9 +20,26 @@ public class VoteServiceTest extends AbstractServiceTest {
     private VoteService service;
 
     @Test
-    @Transactional
     public void testGetAllByUser(){
-        System.out.println(service.getAllByUser(VOTE1_ID));;
+        service.getAllByUser(USER1_ID);
     }
 
+    @Test
+    public void testGetAllByDate(){
+        service.getAllByDate(DATE);
+    }
+
+    @Test
+    public void testGetLast(){
+        service.getLast(USER1_ID);
+    }
+
+    @Test
+    @Transactional
+    public void testSave(){
+        Vote updated = getUpdated();
+        service.save(updated, USER1_ID, RESTAURANT_ID);
+        Vote actual = service.getLast(USER1_ID);
+        Assert.assertEquals(updated, actual);
+    }
 }

@@ -2,6 +2,7 @@ package com.projects.votingsystem.model;
 
 
 import com.projects.votingsystem.HasId;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 
@@ -37,5 +38,15 @@ public abstract class BaseEntity implements HasId{
         return "BaseEntity{" +
                 "id=" + id +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BaseEntity that = (BaseEntity) o;
+
+        return getId() != null && getId().equals(that.getId());
     }
 }
