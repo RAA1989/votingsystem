@@ -1,5 +1,6 @@
 package com.projects.votingsystem.model;
 
+import org.hibernate.annotations.BatchSize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -13,11 +14,12 @@ import java.util.List;
 public class Menu extends BaseEntity {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "menu")
+    @BatchSize(size = 200)
     private List<Meal> meals;
 
     @Column(name = "date")
     @NotNull
-    private LocalDate date;
+    private LocalDate date = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")

@@ -1,38 +1,47 @@
 package com.projects.votingsystem.service;
 
-import com.projects.votingsystem.model.Restaurant;
-import com.projects.votingsystem.model.User;
 import com.projects.votingsystem.model.Vote;
+import com.projects.votingsystem.repository.DataJpaRestaurantRepository;
+import com.projects.votingsystem.repository.DataJpaUserRepository;
 import com.projects.votingsystem.repository.DataJpaVoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
+
+import static com.projects.votingsystem.util.ValidationUtil.checkNotFoundWithId;
 
 
 @Service
 public class VoteServiceImpl implements VoteService {
 
-    private final DataJpaVoteRepository repository;
+    private final DataJpaVoteRepository voteRepository;
+
+    @Autowired
+    private DataJpaRestaurantRepository restaurantRepository;
+
+    @Autowired
+    private DataJpaUserRepository userRepository;
+
 
     @Autowired
     public VoteServiceImpl(DataJpaVoteRepository repository) {
-        this.repository = repository;
+        this.voteRepository = repository;
     }
 
     @Override
     public List<Vote> getAllByUser(int userId) {
-        return repository.getAllByUser(userId);
+        return voteRepository.getAllByUser(userId);
     }
 
     @Override
     public Vote getLast(int userId) {
-        List<Vote> list = repository.getAllByUser(userId);
+        List<Vote> list = voteRepository.getAllByUser(userId);
         return list.get(list.size()-1);
     }
 
@@ -41,17 +50,23 @@ public class VoteServiceImpl implements VoteService {
     public List<Vote> getAllByDate(LocalDate date) {
         LocalDateTime startDateTime = LocalDateTime.of(date, LocalTime.MIN);
         LocalDateTime endDateTime = LocalDateTime.of(date, LocalTime.MAX);
-        return repository.getAllByDateTime(startDateTime,endDateTime);
+        return voteRepository.getAllByDateTime(startDateTime,endDateTime);
     }
 
     @Override
     public Vote save(Vote vote, int userId, int restaurantId) {
-        User user = new User();
-        user.setId(userId);
-        Restaurant restaurant = new Restaurant();
-        restaurant.setId(restaurantId);
-        vote.setUser(user);
-        vote.setRestaurant(restaurant);
-        return repository.save(vote);
+        Assert.notNull(vote, "vote must not be null");
+        vote.setUser(userRepository.getOne(userId));
+        vote.setRestaurant(restaurantRepository.getOne(restaurantId));
+        return voteRepository.save(vote);
+    }
+
+    @Override
+    @Transactional
+    public Vote update(Vote vote, int userId, int restaurantId) {
+        Assert.notNull(vote, "vote must not be null");
+        vote.setUser(userRepository.getOne(userId));
+        vote.setRestaurant(restaurantRepository.getOne(restaurantId));
+        return checkNotFoundWithId(voteRepository.save(vote), vote.getId());
     }
 }

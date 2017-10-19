@@ -1,6 +1,6 @@
 package com.projects.votingsystem.util;
 
-import com.projects.votingsystem.HasId;
+import com.projects.votingsystem.util.Exception.NotFoundException;
 
 public class ValidationUtil {
 
@@ -20,11 +20,11 @@ public class ValidationUtil {
         return object;
     }
 
-//    public static void checkNotFound(boolean found, String arg) {
-//        if (!found) {
-//            throw new NotFoundException(arg);
-//        }
-//    }
+    public static void checkNotFound(boolean found, String arg) {
+        if (!found) {
+            throw new NotFoundException(arg);
+        }
+    }
 //
 //    public static void checkNew(HasId bean) {
 //        if (!bean.isNew()) {

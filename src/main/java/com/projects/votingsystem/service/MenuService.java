@@ -9,5 +9,7 @@ public interface MenuService {
 
     List<Menu> getAllByRestaurant(int restaurantId);
 
-    Menu create(Menu menu);
+    Menu create(Menu menu, int restaurantId);
+
+    void evictCache();
 }

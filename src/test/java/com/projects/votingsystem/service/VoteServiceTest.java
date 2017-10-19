@@ -7,12 +7,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.BufferedReader;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.projects.votingsystem.VoteTestData.*;
+import static com.projects.votingsystem.TestData.*;
 
 public class VoteServiceTest extends AbstractServiceTest {
 
@@ -21,12 +18,18 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     public void testGetAllByUser(){
-        service.getAllByUser(USER1_ID);
+        List<Vote> list = service.getAllByUser(USER1_ID);
+        for(Vote vote : list){
+            System.out.println(vote.getRestaurant().getName());
+        }
     }
 
     @Test
     public void testGetAllByDate(){
-        service.getAllByDate(DATE);
+        List<Vote> list = service.getAllByDate(DATE);
+        for(Vote vote : list){
+            System.out.println(vote.getRestaurant().getName());
+        }
     }
 
     @Test

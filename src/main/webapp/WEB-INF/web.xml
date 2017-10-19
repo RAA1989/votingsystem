@@ -4,7 +4,26 @@
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:spring/spring-app.xml
+            classpath:spring/spring-db.xml
+        </param-value>
+    </context-param>
 
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
+    <servlet>
+        <servlet-name>voteServlet</servlet-name>
+        <servlet-class>com.projects.votingsystem.web.VoteServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>voteServlet</servlet-name>
+        <url-pattern>/votes</url-pattern>
+    </servlet-mapping>
 
 </web-app>

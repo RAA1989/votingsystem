@@ -9,7 +9,7 @@ import java.time.Month;
 
 import static com.projects.votingsystem.model.BaseEntity.START_SEQ;
 
-public class VoteTestData {
+public class TestData {
 
     public static final int VOTE1_ID = START_SEQ + 4;
     public static final int RESTAURANT_ID = START_SEQ + 2;
@@ -29,6 +29,7 @@ public class VoteTestData {
         Menu menu2 = new Menu();
         menu1.setId(100008);
         menu2.setId(100009);
+
         MEAL1.setMenu(menu1);
         MEAL2.setMenu(menu1);
         MEAL3.setMenu(menu2);
@@ -36,7 +37,6 @@ public class VoteTestData {
     }
 
     public static Vote getUpdated(){
-        Vote updatedVote = new Vote(VOTE1_ID, LocalDateTime.of(2017,6,30,10,0));
-        return updatedVote;
+        return new Vote(VOTE1_ID, LocalDateTime.of(2017,6,30,10,0));
     }
 }

@@ -1,5 +1,6 @@
 package com.projects.votingsystem.model;
 
+import org.hibernate.annotations.BatchSize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -15,10 +16,9 @@ public class Vote extends BaseEntity{
     @NotNull
     private Restaurant restaurant;
 
-    @Column(name = "date_time")
+    @Column(name = "date_time", columnDefinition = "timestamp default now")
     @NotNull
-    @DateTimeFormat
-    private LocalDateTime dateTime;
+    private LocalDateTime dateTime = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

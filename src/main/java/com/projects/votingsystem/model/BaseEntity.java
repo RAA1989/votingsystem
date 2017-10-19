@@ -49,4 +49,9 @@ public abstract class BaseEntity implements HasId{
 
         return getId() != null && getId().equals(that.getId());
     }
+
+    @Override
+    public int hashCode() {
+        return id != null ? getId() : 0;
+    }
 }
