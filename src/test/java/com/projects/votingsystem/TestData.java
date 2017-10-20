@@ -14,7 +14,7 @@ public class TestData {
     public static final int VOTE1_ID = START_SEQ + 4;
     public static final int RESTAURANT_ID = START_SEQ + 2;
     public static final int USER1_ID = START_SEQ;
-    public static final LocalDate DATE = LocalDate.of(2015, Month.MAY, 30);
+    public static final LocalDate DATE = LocalDate.of(2015, Month.MAY, 31);
 
     public static final Vote VOTE1 = new Vote(START_SEQ, LocalDateTime.of(2015,5,30,10,0));
     public static final Vote VOTE2 = new Vote(VOTE1_ID + 1, LocalDateTime.of(2017,10,25,15,0));

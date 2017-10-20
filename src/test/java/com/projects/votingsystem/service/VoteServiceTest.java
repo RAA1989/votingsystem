@@ -1,6 +1,7 @@
 package com.projects.votingsystem.service;
 
 
+import com.projects.votingsystem.model.Restaurant;
 import com.projects.votingsystem.model.Vote;
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.projects.votingsystem.TestData.*;
 
@@ -44,5 +46,13 @@ public class VoteServiceTest extends AbstractServiceTest {
         service.save(updated, USER1_ID, RESTAURANT_ID);
         Vote actual = service.getLast(USER1_ID);
         Assert.assertEquals(updated, actual);
+    }
+
+    @Test
+    public void testCountVotes(){
+        Map<Restaurant, List<Vote>> map = service.countVotes(DATE);
+        for(Map.Entry<Restaurant, List<Vote>> set : map.entrySet()){
+            System.out.println(set.getKey().getName() + " : " + set.getValue().get(2).getRestaurant().getName());
+        }
     }
 }

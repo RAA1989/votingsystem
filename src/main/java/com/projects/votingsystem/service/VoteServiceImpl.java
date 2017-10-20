@@ -1,5 +1,6 @@
 package com.projects.votingsystem.service;
 
+import com.projects.votingsystem.model.Restaurant;
 import com.projects.votingsystem.model.Vote;
 import com.projects.votingsystem.repository.DataJpaRestaurantRepository;
 import com.projects.votingsystem.repository.DataJpaUserRepository;
@@ -13,6 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.projects.votingsystem.util.ValidationUtil.checkNotFoundWithId;
 
@@ -68,5 +71,18 @@ public class VoteServiceImpl implements VoteService {
         vote.setUser(userRepository.getOne(userId));
         vote.setRestaurant(restaurantRepository.getOne(restaurantId));
         return checkNotFoundWithId(voteRepository.save(vote), vote.getId());
+    }
+//
+//    @Override
+//    public Map<Restaurant, Integer> countVotes(LocalDate date){
+//        List<Vote> votes = getAllByDate(date);
+//        return votes.stream().collect(Collectors.groupingBy(Vote::getRestaurant, Collectors.summingInt(v -> 1)));
+//    }
+
+
+    @Override
+    public Map<Restaurant, List<Vote>> countVotes(LocalDate date){
+        List<Vote> votes = getAllByDate(date);
+        return votes.stream().collect(Collectors.groupingBy(v -> v.getRestaurant()));
     }
 }

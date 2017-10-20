@@ -1,6 +1,8 @@
 package com.projects.votingsystem.web;
 
 
+import com.projects.votingsystem.service.MenuService;
+import com.projects.votingsystem.service.RestaurantService;
 import com.projects.votingsystem.service.VoteService;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -23,8 +25,12 @@ public class VoteServlet extends HttpServlet {
         wac = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        VoteService service = wac.getBean(VoteService.class);
-        request.setAttribute("voteList", service.getAllByDate(LocalDate.of(2015, Month.MAY, 30)));
+        VoteService voteService = wac.getBean(VoteService.class);
+        RestaurantService restaurantService = wac.getBean(RestaurantService.class);
+        request.setAttribute("voteList", voteService.getAllByDate(LocalDate.of(2015, Month.MAY, 30)));
+        request.setAttribute("restList", restaurantService.getAll());
+//        request.setAttribute("voteList", service.getLast(100000));
+        //request.setAttribute("voteList", "hernya");
         request.getRequestDispatcher("/voteList.jsp").forward(request,response);
     }
 }
