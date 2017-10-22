@@ -10,25 +10,25 @@
 <h2>Vote List</h2>
 
 <section>
-    <table border="1" cellpadding="8" cellspacing="0">
+    <table border="2" cellpadding="30" cellspacing="0">
         <thead>
         <tr>
             <th>Restaurant</th>
             <th>Votes</th>
         </tr>
         </thead>
-        <%--<tr>--%>
-        <%--${voteList.restaurant.name}--%>
-        <%--</tr>--%>
-        <c:forEach items="${voteList}" var="vote">
-            <c:forEach items="${restList}" var="rest">
-                <jsp:useBean id="vote" scope="page" type="com.projects.votingsystem.model.Vote"/>
-                <jsp:useBean id="rest" scope="page" type="com.projects.votingsystem.model.Restaurant"/>
-                <tr>
-                    <td>${rest.name}</td>
-                    <td>${vote.restaurant.name}</td>
-                </tr>
-            </c:forEach>
+        <%--<c:forEach items="${voteList}" var="vote">--%>
+            <%--&lt;%&ndash;<jsp:useBean id="vote" scope="page" type="com.projects.votingsystem.model.Vote"/>&ndash;%&gt;--%>
+            <%--<tr>--%>
+                <%--<td>${vote.key.name}</td>--%>
+                <%--<td>${vote.value}</td>--%>
+            <%--</tr>--%>
+        <%--</c:forEach>--%>
+        <c:forEach items="${voteList}" var="vote" varStatus="status">
+            <tr>
+                <td>vote.restaurant.name</td>
+                <td>counts[status.index}</td>
+            </tr>
         </c:forEach>
     </table>
 </section>

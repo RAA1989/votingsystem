@@ -72,17 +72,14 @@ public class VoteServiceImpl implements VoteService {
         vote.setRestaurant(restaurantRepository.getOne(restaurantId));
         return checkNotFoundWithId(voteRepository.save(vote), vote.getId());
     }
-//
-//    @Override
-//    public Map<Restaurant, Integer> countVotes(LocalDate date){
-//        List<Vote> votes = getAllByDate(date);
-//        return votes.stream().collect(Collectors.groupingBy(Vote::getRestaurant, Collectors.summingInt(v -> 1)));
-//    }
-
 
     @Override
-    public Map<Restaurant, List<Vote>> countVotes(LocalDate date){
+    @Transactional
+    public Map<Restaurant, Integer> countVotes(LocalDate date){
         List<Vote> votes = getAllByDate(date);
-        return votes.stream().collect(Collectors.groupingBy(v -> v.getRestaurant()));
+        Map<Restaurant, Integer> map = votes.stream().collect(Collectors.groupingBy(Vote::getRestaurant, Collectors.summingInt(v -> 1)));
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+        restaurants.stream().filter(r -> !map.containsKey(r)).forEach(r -> map.put(r,0));
+        return map;
     }
 }

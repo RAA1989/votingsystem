@@ -50,9 +50,9 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     public void testCountVotes(){
-        Map<Restaurant, List<Vote>> map = service.countVotes(DATE);
-        for(Map.Entry<Restaurant, List<Vote>> set : map.entrySet()){
-            System.out.println(set.getKey().getName() + " : " + set.getValue().get(2).getRestaurant().getName());
+        Map<Restaurant, Integer> map = service.countVotes(DATE);
+        for(Map.Entry<Restaurant, Integer> set : map.entrySet()){
+            System.out.println(set.getKey().getName() + " : " + set.getValue());
         }
     }
 }

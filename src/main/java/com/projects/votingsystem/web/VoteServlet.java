@@ -27,10 +27,8 @@ public class VoteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         VoteService voteService = wac.getBean(VoteService.class);
         RestaurantService restaurantService = wac.getBean(RestaurantService.class);
-        request.setAttribute("voteList", voteService.getAllByDate(LocalDate.of(2015, Month.MAY, 30)));
-        request.setAttribute("restList", restaurantService.getAll());
-//        request.setAttribute("voteList", service.getLast(100000));
-        //request.setAttribute("voteList", "hernya");
+        request.setAttribute("voteList", voteService.countVotes(LocalDate.of(2015, Month.MAY, 31)));
+        request.setAttribute("counts", restaurantService.getAll());
         request.getRequestDispatcher("/voteList.jsp").forward(request,response);
     }
 }

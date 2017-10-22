@@ -21,5 +21,5 @@ public interface VoteService {
 
     Vote update(Vote vote, int userId, int restaurantId) throws NotFoundException;
 
-    public Map<Restaurant, List<Vote>> countVotes(LocalDate date);
+    public Map<Restaurant, Integer> countVotes(LocalDate date);
 }

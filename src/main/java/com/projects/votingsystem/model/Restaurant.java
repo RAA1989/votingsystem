@@ -1,9 +1,8 @@
 package com.projects.votingsystem.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import org.hibernate.annotations.BatchSize;
+
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -12,6 +11,9 @@ public class Restaurant extends NamedEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     private List<Menu> menu;
+
+    @Column(name = "enabled")
+    private boolean enabled;
 
     protected Restaurant(Integer id, String name) {
         super(id, name);
@@ -22,6 +24,14 @@ public class Restaurant extends NamedEntity {
 
     public List<Menu> getMenu() {
         return menu;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public void setMenu(List<Menu> menu) {
