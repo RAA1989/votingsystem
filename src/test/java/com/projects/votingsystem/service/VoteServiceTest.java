@@ -1,15 +1,14 @@
 package com.projects.votingsystem.service;
 
 
-import com.projects.votingsystem.model.Restaurant;
 import com.projects.votingsystem.model.Vote;
+import com.projects.votingsystem.to.RestaurantRatingTo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 import static com.projects.votingsystem.TestData.*;
 
@@ -41,18 +40,25 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     @Transactional
-    public void testSave(){
+    public void testUpdate(){
         Vote updated = getUpdated();
-        service.save(updated, USER1_ID, RESTAURANT_ID);
-        Vote actual = service.getLast(USER1_ID);
-        Assert.assertEquals(updated, actual);
+        Vote actual = service.update(updated, RESTAURANT_ID+1);
+        Assert.assertEquals(updated,actual);
     }
 
     @Test
     public void testCountVotes(){
-        Map<Restaurant, Integer> map = service.countVotes(DATE);
-        for(Map.Entry<Restaurant, Integer> set : map.entrySet()){
-            System.out.println(set.getKey().getName() + " : " + set.getValue());
+        List<RestaurantRatingTo> list = service.countVotes(DATE);
+        for(RestaurantRatingTo to : list){
+            System.out.println(to.getName() + " : " + to.getRating());
         }
+    }
+
+    @Test
+    @Transactional
+    public void testCreate(){
+        Vote created = service.create(USER1_ID, RESTAURANT_ID);
+        Vote actual = service.getLast(USER1_ID);
+        Assert.assertEquals(created, actual);
     }
 }

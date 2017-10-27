@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService{
@@ -29,13 +27,14 @@ public class RestaurantServiceImpl implements RestaurantService{
     }
 
     @Override
-    public Map<Restaurant, Menu> getAllEnabledWithMenu(){
-        Map<Restaurant, Menu> map = new HashMap<>();
+    public List<Restaurant> getAllEnabledWithMenu(){
+        List<Restaurant> result = new ArrayList<Restaurant>();
         List<Restaurant> list = repository.getAllEnabled();
-        for(Restaurant r : list){
-           List<Menu> menuList = r.getMenu();
-           map.put(r, menuList.get(menuList.size()-1));
+        for(Restaurant restaurant : list){
+            List<Menu> menuList = restaurant.getMenu();
+            restaurant.setMenu(Collections.singletonList(menuList.get(menuList.size()-1)));
+            result.add(restaurant);
         }
-        return map;
+        return result;
     }
 }

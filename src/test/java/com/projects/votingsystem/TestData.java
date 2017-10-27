@@ -37,6 +37,10 @@ public class TestData {
     }
 
     public static Vote getUpdated(){
-        return new Vote(VOTE1_ID, LocalDateTime.of(2017,6,30,10,0));
+        Restaurant restaurant = new Restaurant();
+        restaurant.setId(RESTAURANT_ID);
+        User user = new User();
+        user.setId(USER1_ID);
+        return new Vote(VOTE1_ID, restaurant, user);
     }
 }

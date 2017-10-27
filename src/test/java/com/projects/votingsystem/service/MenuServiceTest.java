@@ -38,8 +38,8 @@ public class MenuServiceTest extends AbstractServiceTest{
     }
 
     @Test
-    public void testSave(){
-        Menu menu = service.create(new Menu(), RESTAURANT_ID);
-        System.out.println(menu.getDate());
+    public void testCreate(){
+        Menu menu = service.create(RESTAURANT_ID);
+        //System.out.println(menu.getDate());
     }
 }

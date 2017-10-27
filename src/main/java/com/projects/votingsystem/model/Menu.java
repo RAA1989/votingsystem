@@ -1,5 +1,6 @@
 package com.projects.votingsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -25,6 +26,7 @@ public class Menu extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     @NotNull
+    @JsonIgnore
     private Restaurant restaurant;
 
     protected Menu(Integer id, List<Meal> meals, LocalDate date, Restaurant restaurant) {

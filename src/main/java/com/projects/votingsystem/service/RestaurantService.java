@@ -13,5 +13,5 @@ public interface RestaurantService {
 
     public List<Restaurant> getAll();
 
-    public Map<Restaurant, Menu> getAllEnabledWithMenu();
+    public List<Restaurant> getAllEnabledWithMenu();
 }

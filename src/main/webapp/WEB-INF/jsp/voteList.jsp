@@ -26,8 +26,8 @@
         <%--</c:forEach>--%>
         <c:forEach items="${voteList}" var="vote" varStatus="status">
             <tr>
-                <td>vote.restaurant.name</td>
-                <td>counts[status.index}</td>
+                <td>${vote.key.name}</td>
+                <td>${vote.value}</td>
             </tr>
         </c:forEach>
     </table>

@@ -6,4 +6,6 @@ import com.projects.votingsystem.model.Meal;
 public interface MealService {
 
     Meal save(Meal meal, int menuId);
+
+    Meal update(Meal meal);
 }

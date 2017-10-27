@@ -1,5 +1,6 @@
 package com.projects.votingsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,6 +19,7 @@ public class Vote extends BaseEntity{
 
     @Column(name = "date_time", columnDefinition = "timestamp default now")
     @NotNull
+    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateTime = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,6 +39,12 @@ public class Vote extends BaseEntity{
     public Vote(Integer id, LocalDateTime dateTime) {
         super(id);
         this.dateTime = dateTime;
+    }
+
+    public Vote(Integer id, Restaurant restaurant, User user) {
+        super(id);
+        this.restaurant = restaurant;
+        this.user = user;
     }
 
     public Restaurant getRestaurant() {

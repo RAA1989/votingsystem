@@ -1,6 +1,8 @@
 package com.projects.votingsystem.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -14,6 +16,7 @@ public class Meal extends NamedEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id")
     @NotNull
+    @JsonIgnore
     private Menu menu;
 
     public Meal(){
