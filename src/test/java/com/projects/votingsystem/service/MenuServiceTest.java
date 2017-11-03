@@ -40,6 +40,6 @@ public class MenuServiceTest extends AbstractServiceTest{
     @Test
     public void testCreate(){
         Menu menu = service.create(RESTAURANT_ID);
-        //System.out.println(menu.getDate());
+        System.out.println(menu.getDate());
     }
 }

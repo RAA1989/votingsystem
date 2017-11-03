@@ -15,7 +15,6 @@ public class Meal extends NamedEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id")
-    @NotNull
     @JsonIgnore
     private Menu menu;
 

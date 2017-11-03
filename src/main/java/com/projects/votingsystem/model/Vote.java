@@ -19,7 +19,6 @@ public class Vote extends BaseEntity{
 
     @Column(name = "date_time", columnDefinition = "timestamp default now")
     @NotNull
-    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateTime = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)

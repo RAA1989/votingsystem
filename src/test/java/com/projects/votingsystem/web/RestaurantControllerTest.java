@@ -31,10 +31,9 @@ public class RestaurantControllerTest extends AbstractControllerTest {
     @Test
     public void testCreate() throws Exception {
         Restaurant restaurant = new Restaurant();
-        restaurant.setName("new restaurant");
+        restaurant.setName("New Restaurant");
 
         mockMvc.perform(post(URL)
-        .contentType(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON)
         .content(getMapper().writeValueAsString(restaurant)))
                 .andDo(print())

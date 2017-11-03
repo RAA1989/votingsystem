@@ -2,14 +2,15 @@ package com.projects.votingsystem.service;
 
 import com.projects.votingsystem.model.Meal;
 import com.projects.votingsystem.model.Menu;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
-import static com.projects.votingsystem.TestData.RESTAURANT_ID;
+import static com.projects.votingsystem.TestData.*;
 
 public class MealServiceTest extends AbstractServiceTest{
 
@@ -25,17 +26,35 @@ public class MealServiceTest extends AbstractServiceTest{
     }
 
     @Test
-    public void save() throws Exception {
-        Menu menu = menuService.create(new Menu(), RESTAURANT_ID);
-        Meal meal1 = new Meal(null, "new meal", 7777);
-        Meal meal2 = new Meal(null, "NEW MEAL", 8888);
-        mealService.save(meal1, menu.getId());
-        mealService.save(meal2, menu.getId());
+    public void testSave() throws Exception {
+        Menu menu = menuService.create(RESTAURANT_ID);
+        mealService.create(MEAL1, menu.getId());
+        mealService.create(MEAL2, menu.getId());
         List<Menu> list = menuService.getAllByRestaurant(RESTAURANT_ID);
         Menu newMenu = list.get(0);
         for(Meal meal : newMenu.getMeals()){
-            System.out.println(meal.getName() + " : " + meal.getValue());
+            System.out.println(meal.getName() + " : " + meal.getMenu().getId());
         }
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        Menu menu = menuService.create(RESTAURANT_ID);
+        mealService.create(MEAL1, menu.getId());
+        mealService.create(MEAL2, menu.getId());
+        MEAL1.setName("Updated Meal");
+        Meal updated = mealService.update(MEAL1);
+        Assert.assertEquals(updated, MEAL1);
+    }
+
+    @Test
+    public void testDelete(){
+        mealService.delete(MEAL_ID);
+    }
+
+    @Test
+    public void testGet(){
+        Assert.assertEquals(mealService.get(MEAL_ID), MEAL1);
     }
 
 }

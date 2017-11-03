@@ -59,9 +59,9 @@ public class MenuController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Menu update(@RequestBody Menu menu, @RequestParam(value = "restaurantId") int restaurantId, @PathVariable("id") int id){
-        assureIdConsistent(menu, menu.getId());
-        return service.update(menu, restaurantId);
-    }
+//    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public Menu update(@RequestBody Menu menu, @RequestParam(value = "restaurantId") int restaurantId, @PathVariable("id") int id){
+//        assureIdConsistent(menu, menu.getId());
+//        return service.update(menu, restaurantId);
+//    }
 }

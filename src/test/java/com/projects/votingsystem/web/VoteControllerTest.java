@@ -41,17 +41,17 @@ public class VoteControllerTest extends AbstractControllerTest {
                 .andExpect(status().isCreated());
     }
 
-    @Test
-    public void testUpdate() throws Exception {
-        Vote updated = getUpdated();
-
-        mockMvc.perform(put(URL + VOTE1_ID)
-                .param("restaurantId", String.valueOf(RESTAURANT_ID + 1))
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(getMapper().writeValueAsString(updated)))
-        .andDo(print())
-        .andExpect(status().isOk());
-    }
+//    @Test
+//    public void testUpdate() throws Exception {
+//        Vote updated = getUpdated();
+//
+//        mockMvc.perform(put(URL + VOTE1_ID)
+//                .param("restaurantId", String.valueOf(RESTAURANT_ID + 1))
+//        .contentType(MediaType.APPLICATION_JSON)
+//        .content(getMapper().writeValueAsString(updated)))
+//        .andDo(print())
+//        .andExpect(status().isOk());
+//    }
 
     @Test
     public void testGetAllByUser() throws Exception {

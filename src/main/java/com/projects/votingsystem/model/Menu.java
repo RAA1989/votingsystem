@@ -21,6 +21,7 @@ public class Menu extends BaseEntity {
 
     @Column(name = "date")
     @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.LAZY)

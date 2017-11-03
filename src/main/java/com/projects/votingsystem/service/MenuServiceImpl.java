@@ -40,7 +40,7 @@ public class MenuServiceImpl implements MenuService{
 //    public Menu create(Menu menu, int restaurantId) {
 //        Assert.notNull(menu, "menu must not be null");
 //        menu.setRestaurant(restaurantRepository.getOne(restaurantId));
-//        return menuRepository.save(menu);
+//        return menuRepository.create(menu);
 //    }
 
     @Override
@@ -52,13 +52,13 @@ public class MenuServiceImpl implements MenuService{
         return menuRepository.save(menu);
     }
 
-    @Override
-    @CacheEvict(value = "menus", allEntries = true)
-    @Transactional
-    public Menu update(Menu menu, int restaurantId){
-        menu.setRestaurant(restaurantRepository.getOne(restaurantId));
-        return checkNotFoundWithId(menuRepository.save(menu), menu.getId());
-    }
+//    @Override
+//    @CacheEvict(value = "menus", allEntries = true)
+//    @Transactional
+//    public Menu update(Menu menu, int restaurantId){
+//        menu.setRestaurant(restaurantRepository.getOne(restaurantId));
+//        return checkNotFoundWithId(menuRepository.create(menu), menu.getId());
+//    }
 
     @CacheEvict(value = "menus", allEntries = true)
     @Override

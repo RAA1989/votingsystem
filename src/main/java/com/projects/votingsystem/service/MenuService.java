@@ -11,7 +11,7 @@ public interface MenuService {
 
     Menu create(int restaurantId);
 
-    Menu update(Menu menu, int restaurantId);
+//    Menu update(Menu menu, int restaurantId);
 
     void evictCache();
 }

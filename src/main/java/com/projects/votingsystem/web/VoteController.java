@@ -21,7 +21,7 @@ import static com.projects.votingsystem.util.ValidationUtil.assureIdConsistent;
 
 
 @RestController
-@RequestMapping(value = VoteController.URL)//, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = VoteController.URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteController {
     static final String URL = "/votes";
 
@@ -41,7 +41,7 @@ public class VoteController {
     public ResponseEntity<Vote> createWithLocation(@RequestParam(value = "restaurantId") int restaurantId){
         log.info("creating a vote");
         int userId = 100000;
-        Vote created = service.create(userId,restaurantId);
+        Vote created = service.createOrUpdate(userId,restaurantId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -49,13 +49,13 @@ public class VoteController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Vote update(@RequestBody Vote vote, @RequestParam(value = "restaurantId") int restaurantId, @PathVariable int id){
-        log.info("updateing a vote");
-        int userId = 100000;
-        assureIdConsistent(vote, id);
-        return service.update(vote, restaurantId);
-    }
+//    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public Vote update(@RequestBody Vote vote, @RequestParam(value = "restaurantId") int restaurantId, @PathVariable int id){
+//        log.info("updateing a vote");
+//        int userId = 100000;
+//        assureIdConsistent(vote, id);
+//        return service.update(vote, restaurantId);
+//    }
 
     @GetMapping
     public List<Vote> getAllByUser(){

@@ -16,10 +16,10 @@ public interface VoteService {
 
     List<Vote> getAllByDate(LocalDate date);
 
-    Vote create(int userId, int restaurantId);
+    Vote createOrUpdate(int userId, int restaurantId);
 
     //Vote update(Vote vote, int userId, int restaurantId) throws NotFoundException;
-    Vote update(Vote vote, int restaurantId) throws NotFoundException;
+//    Vote update(Vote vote, int restaurantId) throws NotFoundException;
 
     public List<RestaurantRatingTo> countVotes(LocalDate date);
 }

@@ -6,6 +6,7 @@ import com.projects.votingsystem.repository.DataJpaRestaurantRepository;
 import com.projects.votingsystem.repository.DataJpaUserRepository;
 import com.projects.votingsystem.repository.DataJpaVoteRepository;
 import com.projects.votingsystem.to.RestaurantRatingTo;
+import com.projects.votingsystem.util.Exception.TimeOutOfBoundsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,8 +59,15 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     @Transactional
-    public Vote create(int userId, int restaurantId) {
+    public Vote createOrUpdate(int userId, int restaurantId) {
+        Vote voteLast = getLast(userId);
         Vote vote = new Vote();
+        if (voteLast.getDateTime().toLocalDate().isEqual(LocalDate.now())){
+            if (voteLast.getDateTime().isAfter(LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 0)))){
+                throw new TimeOutOfBoundsException("The vote has already been accepted");
+            }
+            vote = voteLast;
+        }
         vote.setUser(userRepository.getOne(userId));
         vote.setRestaurant(restaurantRepository.getOne(restaurantId));
         return voteRepository.save(vote);
@@ -67,21 +75,13 @@ public class VoteServiceImpl implements VoteService {
 
 //    @Override
 //    @Transactional
-//    public Vote update(Vote vote, int userId, int restaurantId) {
-//        vote.setUser(userRepository.getOne(userId));
+//    public Vote update(Vote vote, int restaurantId) {
 //        vote.setRestaurant(restaurantRepository.getOne(restaurantId));
-//        return checkNotFoundWithId(voteRepository.create(vote), vote.getId());
+//        return checkNotFoundWithId(voteRepository.save(vote), vote.getId());
 //    }
 
     @Override
     @Transactional
-    public Vote update(Vote vote, int restaurantId) {
-        vote.setRestaurant(restaurantRepository.getOne(restaurantId));
-        return checkNotFoundWithId(voteRepository.save(vote), vote.getId());
-    }
-
-    @Override
-    //@Transactional
     public List<RestaurantRatingTo> countVotes(LocalDate date){
         List<Vote> votes = getAllByDate(date);
         Map<Restaurant, Integer> map = votes.stream().collect(Collectors.groupingBy(Vote::getRestaurant, Collectors.summingInt(v -> 1)));
