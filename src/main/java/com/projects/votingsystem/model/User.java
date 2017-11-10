@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.EnumSet;
 import java.util.Set;
 
 @Entity
@@ -29,11 +30,36 @@ public class User extends NamedEntity {
 
     public User(){}
 
-    public User(Integer id, String name, String email, String password, Set<Role> roles) {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
         super(id, name);
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.roles = EnumSet.of(role, roles);
+
     }
 
     @Override

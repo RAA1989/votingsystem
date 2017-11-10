@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 
 public class MealControllerTest extends AbstractControllerTest {
     public static final String URL = MealController.URL + "/";
@@ -20,6 +20,7 @@ public class MealControllerTest extends AbstractControllerTest {
     @Test
     public void testCreate() throws Exception {
         mockMvc.perform(post(URL)
+                .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword()))
                 .param("menuId", String.valueOf(MENU_ID))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(getMapper().writeValueAsString(CREATED_MEAL)))
@@ -30,6 +31,7 @@ public class MealControllerTest extends AbstractControllerTest {
     @Test
     public void testUpdate() throws Exception {
         mockMvc.perform(put(URL + MEAL_ID)
+                .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(getMapper().writeValueAsString(UPDATED_MEAL)))
                 .andDo(print())
@@ -38,13 +40,15 @@ public class MealControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        mockMvc.perform(delete(URL + MEAL_ID))
+        mockMvc.perform(delete(URL + MEAL_ID)
+                .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword())))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void TestGet() throws Exception {
-        mockMvc.perform(get(URL + MEAL_ID))
+        mockMvc.perform(get(URL + MEAL_ID)
+                .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword())))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));

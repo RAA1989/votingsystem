@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 
 
 public class MenuControllerTest extends AbstractControllerTest {
@@ -19,7 +20,8 @@ public class MenuControllerTest extends AbstractControllerTest {
 
     @Test
     public void getByRestaurant() throws Exception {
-        mockMvc.perform(get(URL + RESTAURANT_ID))
+        mockMvc.perform(get(URL + RESTAURANT_ID)
+                .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword())))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
@@ -28,6 +30,7 @@ public class MenuControllerTest extends AbstractControllerTest {
     @Test
     public void createWithLocation() throws Exception {
         mockMvc.perform(post(URL)
+                .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword()))
                 .param("restaurantId", String.valueOf(RESTAURANT_ID)))
                 .andDo(print())
                 .andExpect(status().isCreated());

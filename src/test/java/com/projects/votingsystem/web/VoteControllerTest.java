@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 
-import static com.projects.votingsystem.TestData.RESTAURANT_ID;
-import static com.projects.votingsystem.TestData.VOTE1_ID;
-import static com.projects.votingsystem.TestData.getUpdated;
+import static com.projects.votingsystem.TestData.*;
+import static com.projects.votingsystem.TestData.ADMIN;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -26,7 +26,8 @@ public class VoteControllerTest extends AbstractControllerTest {
 
     @Test
     public void testShowVotes() throws Exception {
-        mockMvc.perform(get(URL + "result"))
+        mockMvc.perform(get(URL + "result")
+                .with(httpBasic(USER.getEmail(), USER.getPassword())))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
@@ -35,6 +36,7 @@ public class VoteControllerTest extends AbstractControllerTest {
     @Test
     public void testCreate() throws Exception {
         mockMvc.perform(post(URL)
+                .with(httpBasic(USER.getEmail(), USER.getPassword()))
                 .param("restaurantId", String.valueOf(RESTAURANT_ID + 1))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -55,15 +57,17 @@ public class VoteControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetAllByUser() throws Exception {
-        mockMvc.perform(get(URL))
+        mockMvc.perform(get("/votes")
+                .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword())))
                 .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+                .andDo(print());
+                //.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
     @Test
     public void testGetLast() throws Exception {
-        mockMvc.perform(get(URL + "/last"))
+        mockMvc.perform(get(URL + "last")
+                .with(httpBasic(USER.getEmail(), USER.getPassword())))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));

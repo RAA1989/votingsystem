@@ -1,6 +1,7 @@
 package com.projects.votingsystem.web;
 
 
+import com.projects.votingsystem.AuthorizedUser;
 import com.projects.votingsystem.model.Vote;
 import com.projects.votingsystem.service.VoteService;
 import com.projects.votingsystem.to.RestaurantRatingTo;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -38,9 +40,9 @@ public class VoteController {
     }
 
     @PostMapping
-    public ResponseEntity<Vote> createWithLocation(@RequestParam(value = "restaurantId") int restaurantId){
+    public ResponseEntity<Vote> createWithLocation(@AuthenticationPrincipal AuthorizedUser authorizedUser, @RequestParam(value = "restaurantId") int restaurantId){
         log.info("creating a vote");
-        int userId = 100000;
+        int userId = authorizedUser.getId();
         Vote created = service.createOrUpdate(userId,restaurantId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(URL + "/{id}")
@@ -58,16 +60,16 @@ public class VoteController {
 //    }
 
     @GetMapping
-    public List<Vote> getAllByUser(){
+    public List<Vote> getAllByUser(@AuthenticationPrincipal AuthorizedUser authorizedUser){
         log.info("getting all votes by user id");
-        int userId = 100000;
+        int userId = authorizedUser.getId();
         return service.getAllByUser(userId);
     }
 
     @GetMapping(value = "/last")
-    public Vote getLast(){
+    public Vote getLast(@AuthenticationPrincipal AuthorizedUser authorizedUser){
         log.info("getting all votes by user id");
-        int userId = 100000;
+        int userId = authorizedUser.getId();
         return service.getLast(userId);
     }
 }

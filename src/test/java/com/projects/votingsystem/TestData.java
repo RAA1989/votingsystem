@@ -28,6 +28,9 @@ public class TestData {
     public static final Meal CREATED_MEAL = new Meal(null, "New Meal", 777);
     public static final Meal UPDATED_MEAL = new Meal(null, "Updated Meal", 777);
 
+    public static final User ADMIN = new User(USER1_ID + 1, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN, Role.ROLE_USER);
+    public static final User USER = new User(USER1_ID, "User", "user@yandex.ru", "password", Role.ROLE_USER);
+
     static {
         Menu menu1 = new Menu();
         Menu menu2 = new Menu();

@@ -6,7 +6,9 @@ import org.springframework.http.MediaType;
 
 import java.net.URI;
 
+import static com.projects.votingsystem.TestData.ADMIN;
 import static com.projects.votingsystem.web.json.JacksonObjectMapper.getMapper;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -22,7 +24,8 @@ public class RestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetAllEnabledWithMenu() throws Exception {
-        mockMvc.perform(get(URL))
+        mockMvc.perform(get(URL)
+                .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword())))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
@@ -34,15 +37,17 @@ public class RestaurantControllerTest extends AbstractControllerTest {
         restaurant.setName("New Restaurant");
 
         mockMvc.perform(post(URL)
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(getMapper().writeValueAsString(restaurant)))
+                .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(getMapper().writeValueAsString(restaurant)))
                 .andDo(print())
                 .andExpect(status().isCreated());
     }
 
     @Test
     public void testGetAll() throws Exception {
-        mockMvc.perform(get(URL + "all"))
+        mockMvc.perform(get(URL + "all")
+                .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword())))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
