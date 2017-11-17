@@ -20,7 +20,7 @@ public interface DataJpaRestaurantRepository extends JpaRepository<Restaurant, I
     List<Restaurant> findAll();
 
     @EntityGraph(attributePaths = "menu", type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT r From Restaurant r where r.enabled = true")
-    List<Restaurant> getAllEnabled();
+    @Query("SELECT r From Restaurant r")
+    List<Restaurant> getAllWithLastMenu();
 }
 

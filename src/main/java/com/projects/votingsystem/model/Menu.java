@@ -1,6 +1,7 @@
 package com.projects.votingsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.BatchSize;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,6 +23,7 @@ public class Menu extends BaseEntity {
     @Column(name = "date")
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDate date = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.LAZY)

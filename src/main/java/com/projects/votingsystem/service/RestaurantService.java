@@ -13,5 +13,5 @@ public interface RestaurantService {
 
     public List<Restaurant> getAll();
 
-    public List<Restaurant> getAllEnabledWithMenu();
+    public List<Restaurant> getAllWithLastMenu();
 }

@@ -4,18 +4,15 @@ import com.projects.votingsystem.model.Restaurant;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
-import java.net.URI;
 
 import static com.projects.votingsystem.TestData.ADMIN;
 import static com.projects.votingsystem.web.json.JacksonObjectMapper.getMapper;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-
-
-import static org.junit.Assert.*;
 
 
 public class RestaurantControllerTest extends AbstractControllerTest {
@@ -37,6 +34,7 @@ public class RestaurantControllerTest extends AbstractControllerTest {
         restaurant.setName("New Restaurant");
 
         mockMvc.perform(post(URL)
+                .with(csrf().asHeader())
                 .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword()))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(getMapper().writeValueAsString(restaurant)))

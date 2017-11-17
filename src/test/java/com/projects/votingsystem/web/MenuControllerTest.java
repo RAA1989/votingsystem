@@ -3,14 +3,12 @@ package com.projects.votingsystem.web;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
-import static org.junit.Assert.*;
 import static com.projects.votingsystem.TestData.*;
-import static com.projects.votingsystem.web.json.JacksonObjectMapper.getMapper;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 
 
@@ -30,6 +28,7 @@ public class MenuControllerTest extends AbstractControllerTest {
     @Test
     public void createWithLocation() throws Exception {
         mockMvc.perform(post(URL)
+                .with(csrf().asHeader())
                 .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword()))
                 .param("restaurantId", String.valueOf(RESTAURANT_ID)))
                 .andDo(print())

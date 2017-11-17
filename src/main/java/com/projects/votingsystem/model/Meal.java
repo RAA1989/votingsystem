@@ -2,15 +2,16 @@ package com.projects.votingsystem.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "meals")
 public class Meal extends NamedEntity {
 
     @Column(name = "value")
+    @Range(min = 5, max = 1000)
     private int value;
 
     @ManyToOne(fetch = FetchType.LAZY)

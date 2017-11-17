@@ -1,6 +1,5 @@
 package com.projects.votingsystem.web;
 
-import com.projects.votingsystem.service.MealService;
 import com.projects.votingsystem.service.MenuService;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -34,9 +33,6 @@ abstract public class AbstractControllerTest {
 
     @Autowired
     private MenuService menuService;
-
-    @Autowired
-    private MealService mealService;
 
     @PostConstruct
     private void postConstruct() {

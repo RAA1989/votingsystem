@@ -2,6 +2,7 @@ package com.projects.votingsystem.service;
 
 
 import com.projects.votingsystem.model.Meal;
+import com.projects.votingsystem.model.Menu;
 import com.projects.votingsystem.repository.DataJpaMealRepository;
 import com.projects.votingsystem.repository.DataJpaMenuRepository;
 import com.projects.votingsystem.util.Exception.NotFoundException;
@@ -25,7 +26,8 @@ public class MealServiceImpl implements MealService{
     @Transactional
     public Meal create(Meal meal, int menuId){
         Assert.notNull(meal, "meal must not be null");
-        meal.setMenu(menuRepository.getOne(menuId));
+        Menu menu = checkNotFoundWithId(menuRepository.findOne(menuId), menuId);
+        meal.setMenu(menu);
         return mealRepository.save(meal);
     }
 
@@ -38,7 +40,7 @@ public class MealServiceImpl implements MealService{
 
     @Override
     public void delete(int id) {
-        mealRepository.delete(id);
+        checkNotFoundWithId(mealRepository.delete(id)!=0, id);
     }
 
     @Override

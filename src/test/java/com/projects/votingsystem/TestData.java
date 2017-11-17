@@ -27,6 +27,7 @@ public class TestData {
     public static final Meal MEAL4 = new Meal(100015, "coffee", 340);
     public static final Meal CREATED_MEAL = new Meal(null, "New Meal", 777);
     public static final Meal UPDATED_MEAL = new Meal(null, "Updated Meal", 777);
+    public static final Meal FAILED_MEAL = new Meal(null, "N", -5);
 
     public static final User ADMIN = new User(USER1_ID + 1, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN, Role.ROLE_USER);
     public static final User USER = new User(USER1_ID, "User", "user@yandex.ru", "password", Role.ROLE_USER);

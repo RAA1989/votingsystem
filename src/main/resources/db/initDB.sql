@@ -28,8 +28,7 @@ CREATE TABLE user_roles
 CREATE TABLE restaurants
 (
   id              INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  name            VARCHAR                  NOT NULL,
-  enabled         BOOL DEFAULT TRUE        NOT NULL
+  name            VARCHAR                  NOT NULL
 );
 
 CREATE TABLE votes

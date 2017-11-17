@@ -1,12 +1,17 @@
 package com.projects.votingsystem.to;
 
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class RestaurantRatingTo {
 
     private int id;
 
+    @NotBlank
     private String name;
 
+    @NotNull
     private int rating;
 
     public RestaurantRatingTo(){}

@@ -6,6 +6,7 @@ import com.projects.votingsystem.repository.DataJpaRestaurantRepository;
 import com.projects.votingsystem.repository.DataJpaUserRepository;
 import com.projects.votingsystem.repository.DataJpaVoteRepository;
 import com.projects.votingsystem.to.RestaurantRatingTo;
+import com.projects.votingsystem.util.Exception.NotFoundException;
 import com.projects.votingsystem.util.Exception.TimeOutOfBoundsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,14 +48,15 @@ public class VoteServiceImpl implements VoteService {
     @Override
     public Vote getLast(int userId) {
         List<Vote> list = getAllByUser(userId);
-        return list.get(list.size()-1);
+        if (list.size() == 0) return null;
+        return list.get(list.size() - 1);
     }
 
     @Override
     public List<Vote> getAllByDate(LocalDate date) {
         LocalDateTime startDateTime = LocalDateTime.of(date, LocalTime.MIN);
         LocalDateTime endDateTime = LocalDateTime.of(date, LocalTime.MAX);
-        return voteRepository.getAllByDateTime(startDateTime,endDateTime);
+        return voteRepository.getAllByDateTime(startDateTime, endDateTime);
     }
 
     @Override
@@ -62,8 +64,8 @@ public class VoteServiceImpl implements VoteService {
     public Vote createOrUpdate(int userId, int restaurantId) {
         Vote voteLast = getLast(userId);
         Vote vote = new Vote();
-        if (voteLast.getDateTime().toLocalDate().isEqual(LocalDate.now())){
-            if (voteLast.getDateTime().isAfter(LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 0)))){
+        if (voteLast != null && voteLast.getDateTime().toLocalDate().isEqual(LocalDate.now())) {
+            if (vote.getDateTime().isAfter(LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 0)))) {
                 throw new TimeOutOfBoundsException("The vote has already been accepted");
             }
             vote = voteLast;
@@ -73,20 +75,13 @@ public class VoteServiceImpl implements VoteService {
         return voteRepository.save(vote);
     }
 
-//    @Override
-//    @Transactional
-//    public Vote update(Vote vote, int restaurantId) {
-//        vote.setRestaurant(restaurantRepository.getOne(restaurantId));
-//        return checkNotFoundWithId(voteRepository.save(vote), vote.getId());
-//    }
-
     @Override
     @Transactional
-    public List<RestaurantRatingTo> countVotes(LocalDate date){
+    public List<RestaurantRatingTo> countVotes(LocalDate date) {
         List<Vote> votes = getAllByDate(date);
         Map<Restaurant, Integer> map = votes.stream().collect(Collectors.groupingBy(Vote::getRestaurant, Collectors.summingInt(v -> 1)));
         List<Restaurant> restaurants = restaurantRepository.findAll();
-        restaurants.stream().filter(r -> !map.containsKey(r)).forEach(r -> map.put(r,0));
+        restaurants.stream().filter(r -> !map.containsKey(r)).forEach(r -> map.put(r, 0));
         return votingResultAsTo(map);
     }
 }

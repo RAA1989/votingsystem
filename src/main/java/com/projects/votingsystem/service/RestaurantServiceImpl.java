@@ -27,14 +27,14 @@ public class RestaurantServiceImpl implements RestaurantService{
     }
 
     @Override
-    public List<Restaurant> getAllEnabledWithMenu(){
-        List<Restaurant> result = new ArrayList<Restaurant>();
-        List<Restaurant> list = repository.getAllEnabled();
+    public List<Restaurant> getAllWithLastMenu(){
+        List<Restaurant> list = repository.getAllWithLastMenu();
         for(Restaurant restaurant : list){
             List<Menu> menuList = restaurant.getMenu();
-            restaurant.setMenu(Collections.singletonList(menuList.get(menuList.size()-1)));
-            result.add(restaurant);
+            if (!menuList.isEmpty()){
+                restaurant.setMenu(Collections.singletonList(menuList.get(menuList.size()-1)));
+            }
         }
-        return result;
+        return list;
     }
 }

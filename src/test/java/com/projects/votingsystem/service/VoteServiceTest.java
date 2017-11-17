@@ -4,7 +4,6 @@ package com.projects.votingsystem.service;
 import com.projects.votingsystem.model.Vote;
 import com.projects.votingsystem.to.RestaurantRatingTo;
 import com.projects.votingsystem.util.Exception.TimeOutOfBoundsException;
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,14 +38,6 @@ public class VoteServiceTest extends AbstractServiceTest {
     public void testGetLast(){
         service.getLast(USER1_ID);
     }
-
-//    @Test
-//    @Transactional
-//    public void testUpdate(){
-//        Vote updated = getUpdated();
-//        Vote actual = service.update(updated, RESTAURANT_ID+1);
-//        Assert.assertEquals(updated,actual);
-//    }
 
     @Test
     public void testCountVotes(){

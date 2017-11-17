@@ -22,10 +22,13 @@ public class RestaurantServiceTest extends AbstractServiceTest{
     }
 
     @Test
-    public void testGetAllEnabledWithMenu(){
-        List<Restaurant> list = service.getAllEnabledWithMenu();
+    public void testGetAllWithLastMenu(){
+        List<Restaurant> list = service.getAllWithLastMenu();
         for(Restaurant restaurant : list){
             System.out.println(restaurant.getName());
+            if(restaurant.getMenu().isEmpty()) {
+                continue;
+            }
             for(Meal meal : restaurant.getMenu().get(0).getMeals()){
                 System.out.println("    " + meal.getName() + " : " + meal.getValue());
             }

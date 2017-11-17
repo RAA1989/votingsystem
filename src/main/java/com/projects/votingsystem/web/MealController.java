@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
+import javax.validation.Valid;
 import java.net.URI;
 
 import static com.projects.votingsystem.util.ValidationUtil.assureIdConsistent;
@@ -28,7 +29,7 @@ public class MealController {
     MealService service;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Meal> createWithLocation(@RequestBody Meal meal, @RequestParam(value = "menuId") int menuId){
+    public ResponseEntity<Meal> createWithLocation(@Valid @RequestBody Meal meal, @RequestParam(value = "menuId") int menuId){
         log.info("create meal");
         Meal created = service.create(meal, menuId);
 
@@ -40,7 +41,7 @@ public class MealController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Meal update(@RequestBody Meal meal, @PathVariable("id") int id){
+    public Meal update(@Valid @RequestBody Meal meal, @PathVariable("id") int id){
         log.info("update meal");
         assureIdConsistent(meal, id);
         return service.update(meal);

@@ -1,6 +1,5 @@
 package com.projects.votingsystem.web;
 
-import com.projects.votingsystem.model.Menu;
 import com.projects.votingsystem.model.Restaurant;
 import com.projects.votingsystem.service.RestaurantService;
 import org.slf4j.Logger;
@@ -11,9 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
 
 import static com.projects.votingsystem.web.RestaurantController.URL;
 
@@ -30,11 +29,11 @@ public class RestaurantController {
     @GetMapping
     public List<Restaurant> getAllEnabledWithMenu(){
         log.info("get restaurants with menu");
-        return service.getAllEnabledWithMenu();
+        return service.getAllWithLastMenu();
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant restaurant){
+    public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody Restaurant restaurant){
         log.info("create a restaurant");
         Restaurant created = service.create(restaurant);
 
