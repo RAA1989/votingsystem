@@ -27,7 +27,7 @@ public class RestaurantController {
     RestaurantService service;
 
     @GetMapping
-    public List<Restaurant> getAllEnabledWithMenu(){
+    public List<Restaurant> getAllWithLastMenu(){
         log.info("get restaurants with menu");
         return service.getAllWithLastMenu();
     }

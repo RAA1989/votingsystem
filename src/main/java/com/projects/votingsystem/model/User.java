@@ -1,6 +1,7 @@
 package com.projects.votingsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -17,6 +18,7 @@ public class User extends NamedEntity {
     @Email
     @NotBlank
     @Size(max = 100)
+    @SafeHtml
     private String email;
 
     @Column(name = "password", nullable = false)

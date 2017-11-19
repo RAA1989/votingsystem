@@ -2,7 +2,6 @@ package com.projects.votingsystem.model;
 
 
 import com.projects.votingsystem.HasId;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 

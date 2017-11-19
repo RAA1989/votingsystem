@@ -13,4 +13,10 @@ public class ErrorInfo {
         this.type = type;
         this.ex = ex.getLocalizedMessage();
     }
+
+    public ErrorInfo(String url, Exception ex) {
+        this.url = url;
+        this.type = null;
+        this.ex = ex.getLocalizedMessage();
+    }
 }

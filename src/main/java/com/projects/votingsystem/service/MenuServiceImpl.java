@@ -11,12 +11,9 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.util.List;
 
-import static com.projects.votingsystem.util.ValidationUtil.assureIdConsistent;
-import static com.projects.votingsystem.util.ValidationUtil.checkNotFound;
 import static com.projects.votingsystem.util.ValidationUtil.checkNotFoundWithId;
 
 @Service

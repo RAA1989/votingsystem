@@ -14,8 +14,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-import static com.projects.votingsystem.util.ValidationUtil.assureIdConsistent;
-import static com.projects.votingsystem.util.ValidationUtil.checkNew;
 import static com.projects.votingsystem.web.MenuController.URL;
 
 @RestController
@@ -34,19 +32,6 @@ public class MenuController {
         return service.getAllByRestaurant(restaurantId);
     }
 
-//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Menu> createWithLocation(@RequestBody Menu menu, @RequestParam(value = "restaurantId") int restaurantId){
-//        log.info("create a menu");
-//        checkNew(menu);
-//        Menu created = service.create(menu,restaurantId);
-//
-//        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path(URL + "/{id}")
-//                .buildAndExpand(created.getId()).toUri();
-//
-//        return ResponseEntity.created(uriOfNewResource).body(created);
-//    }
-
     @PostMapping
     public ResponseEntity<Menu> createWithLocation(@RequestParam(value = "restaurantId") int restaurantId){
         log.info("create a menu");
@@ -58,10 +43,4 @@ public class MenuController {
 
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
-
-//    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public Menu update(@RequestBody Menu menu, @RequestParam(value = "restaurantId") int restaurantId, @PathVariable("id") int id){
-//        assureIdConsistent(menu, menu.getId());
-//        return service.update(menu, restaurantId);
-//    }
 }

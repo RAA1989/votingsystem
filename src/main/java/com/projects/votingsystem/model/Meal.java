@@ -5,13 +5,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "meals")
 public class Meal extends NamedEntity {
 
     @Column(name = "value")
-    @Range(min = 5, max = 1000)
+    @Range(min = 100, max = 5000)
+    @NotNull
     private int value;
 
     @ManyToOne(fetch = FetchType.LAZY)

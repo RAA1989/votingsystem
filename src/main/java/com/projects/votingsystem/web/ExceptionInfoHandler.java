@@ -28,7 +28,7 @@ public class ExceptionInfoHandler {
 
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ErrorInfo> applicationError(HttpServletRequest req, ApplicationException appEx) {
-        ErrorInfo errorInfo = logAndGetErrorInfo(req,  appEx.getType(), appEx);
+        ErrorInfo errorInfo = logAndGetErrorInfo(req, appEx);
         return new ResponseEntity<>(errorInfo, appEx.getHttpStatus());
     }
 
@@ -61,6 +61,12 @@ public class ExceptionInfoHandler {
         Throwable rootCause = ValidationUtil.getRootCause(e);
         log.warn("Error at request  {}: {}", req.getRequestURL(), rootCause.toString());
         return new ErrorInfo(req.getRequestURL().toString(), type, e);
+    }
+
+    private ErrorInfo logAndGetErrorInfo(HttpServletRequest req, Exception e) {
+        Throwable rootCause = ValidationUtil.getRootCause(e);
+        log.warn("Error at request  {}: {}", req.getRequestURL(), rootCause.toString());
+        return new ErrorInfo(req.getRequestURL().toString(), e);
     }
 
 }

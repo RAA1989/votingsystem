@@ -26,23 +26,12 @@
     <context:component-scan base-package="com.projects.votingsystem.**.repository"/>
     <jpa:repositories base-package="com.projects.votingsystem.**.repository"/>
 
-    <!--no pooling-->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
           p:driverClassName="org.hsqldb.jdbcDriver"
           p:url="${database.url}"
           p:username="${database.username}"
           p:password="${database.password}"/>
-
-
-    <!--<context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>-->
-
-    <!--<bean id="dataSource"-->
-    <!--class="org.apache.tomcat.jdbc.pool.DataSource"-->
-    <!--p:driverClassName="org.postgresql.Driver"-->
-    <!--p:url="${database.url}"-->
-    <!--p:username="${database.username}"-->
-    <!--p:password="${database.password}"/>-->
 
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"

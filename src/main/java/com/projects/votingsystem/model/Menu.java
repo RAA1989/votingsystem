@@ -16,7 +16,6 @@ import java.util.List;
 public class Menu extends BaseEntity {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "menu")
-    @NotNull
     @BatchSize(size = 200)
     private List<Meal> meals;
 

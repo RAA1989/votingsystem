@@ -19,8 +19,6 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
-import static com.projects.votingsystem.util.ValidationUtil.assureIdConsistent;
-
 
 @RestController
 @RequestMapping(value = VoteController.URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,14 +48,6 @@ public class VoteController {
 
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
-
-//    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public Vote update(@RequestBody Vote vote, @RequestParam(value = "restaurantId") int restaurantId, @PathVariable int id){
-//        log.info("updateing a vote");
-//        int userId = 100000;
-//        assureIdConsistent(vote, id);
-//        return service.update(vote, restaurantId);
-//    }
 
     @GetMapping
     public List<Vote> getAllByUser(@AuthenticationPrincipal AuthorizedUser authorizedUser){

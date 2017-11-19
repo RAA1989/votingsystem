@@ -1,7 +1,5 @@
 package com.projects.votingsystem.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.List;

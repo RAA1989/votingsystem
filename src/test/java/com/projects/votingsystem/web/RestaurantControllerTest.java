@@ -20,7 +20,7 @@ public class RestaurantControllerTest extends AbstractControllerTest {
 
 
     @Test
-    public void testGetAllEnabledWithMenu() throws Exception {
+    public void testGetAllWithLastMenu() throws Exception {
         mockMvc.perform(get(URL)
                 .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword())))
                 .andExpect(status().isOk())
@@ -43,12 +43,32 @@ public class RestaurantControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void testCreateInvalid() throws Exception {
+        Restaurant restaurant = new Restaurant();
+        restaurant.setName("R");
+
+        mockMvc.perform(post(URL)
+                .with(csrf().asHeader())
+                .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(getMapper().writeValueAsString(restaurant)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
     public void testGetAll() throws Exception {
         mockMvc.perform(get(URL + "all")
                 .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword())))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testGetUnauth() throws Exception {
+        mockMvc.perform(get(URL + "all"))
+                .andExpect(status().isUnauthorized());
     }
 
 }

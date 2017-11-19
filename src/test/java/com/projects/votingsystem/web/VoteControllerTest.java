@@ -37,6 +37,7 @@ public class VoteControllerTest extends AbstractControllerTest {
                 .andExpect(status().isCreated());
     }
 
+//  For successful fulfilment must be launched after 11:00
     @Test
     public void testUpdateAfterDeadline() throws Exception {
         mockMvc.perform(post(URL)

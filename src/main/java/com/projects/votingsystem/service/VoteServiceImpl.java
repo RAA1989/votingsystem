@@ -6,7 +6,6 @@ import com.projects.votingsystem.repository.DataJpaRestaurantRepository;
 import com.projects.votingsystem.repository.DataJpaUserRepository;
 import com.projects.votingsystem.repository.DataJpaVoteRepository;
 import com.projects.votingsystem.to.RestaurantRatingTo;
-import com.projects.votingsystem.util.Exception.NotFoundException;
 import com.projects.votingsystem.util.Exception.TimeOutOfBoundsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.projects.votingsystem.util.RestaurantUtil.votingResultAsTo;
-import static com.projects.votingsystem.util.ValidationUtil.checkNotFoundWithId;
 
 
 @Service

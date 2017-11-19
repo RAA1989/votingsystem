@@ -1,7 +1,6 @@
 package com.projects.votingsystem.repository;
 
 import com.projects.votingsystem.model.Restaurant;
-import org.hibernate.sql.Select;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
