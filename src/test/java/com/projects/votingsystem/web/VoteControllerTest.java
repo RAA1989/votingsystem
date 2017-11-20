@@ -55,7 +55,7 @@ public class VoteControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetAllByUser() throws Exception {
-        mockMvc.perform(get(URL)
+        mockMvc.perform(get(URL + USER1_ID)
                 .with(httpBasic(ADMIN.getEmail(), ADMIN.getPassword())))
                 .andExpect(status().isOk())
                 .andDo(print())

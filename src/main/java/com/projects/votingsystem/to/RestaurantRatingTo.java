@@ -1,11 +1,15 @@
 package com.projects.votingsystem.to;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
-public class RestaurantRatingTo {
+public class RestaurantRatingTo implements Serializable {
 
+    @JsonIgnore
     private int id;
 
     @NotBlank

@@ -49,16 +49,15 @@ public class VoteController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @GetMapping
-    public List<Vote> getAllByUser(@AuthenticationPrincipal AuthorizedUser authorizedUser){
+    @GetMapping(value = "/{userId}")
+    public List<Vote> getAllByUser(@PathVariable("userId") int userId){
         log.info("getting all votes by user id");
-        int userId = authorizedUser.getId();
         return service.getAllByUser(userId);
     }
 
     @GetMapping(value = "/last")
     public Vote getLast(@AuthenticationPrincipal AuthorizedUser authorizedUser){
-        log.info("getting all votes by user id");
+        log.info("getting last vote by user id");
         int userId = authorizedUser.getId();
         return service.getLast(userId);
     }

@@ -44,7 +44,7 @@ public class MealController {
     public Meal update(@Valid @RequestBody Meal meal, @PathVariable("id") int id){
         log.info("update meal");
         assureIdConsistent(meal, id);
-        return service.update(meal);
+        return service.update(meal, id);
     }
 
     @DeleteMapping("/{id}")

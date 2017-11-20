@@ -33,8 +33,8 @@ public class MealServiceImpl implements MealService{
 
     @Override
     @Transactional
-    public Meal update(Meal meal){
-        Assert.notNull(meal, "meal must not be null");
+    public Meal update(Meal meal, int id) throws NotFoundException{
+        meal.setMenu(get(id).getMenu());
         return checkNotFoundWithId(mealRepository.save(meal), meal.getId());
     }
 
